@@ -1,10 +1,14 @@
 package cqlnls
 
+// Node is an element block that contains the data and has pointers to other
+// Nodes that it's connected
 type Node struct {
 	Value          interface{}
 	Next, Previous *Node
 }
 
+// CircularLinkedList provides the interface for Nodes to connect
+// add and remove nodes from the structure
 type CircularLinkedList struct {
 	head, tail, current *Node
 	len                 int
@@ -16,6 +20,7 @@ func (c *CircularLinkedList) addInit(n *Node) {
 	c.current = n
 }
 
+// Prepend is used to add a Node before the head of the list
 func (c *CircularLinkedList) Prepend(n *Node) *Node {
 	if c.len == 0 {
 		c.addInit(n)
@@ -33,6 +38,7 @@ func (c *CircularLinkedList) Prepend(n *Node) *Node {
 	return c.current
 }
 
+// Append is used to add a Node after the tail of the list
 func (c *CircularLinkedList) Append(n *Node) *Node {
 	if c.len == 0 {
 		c.addInit(n)
@@ -50,10 +56,12 @@ func (c *CircularLinkedList) Append(n *Node) *Node {
 	return c.current
 }
 
+// Length returns the size of the list (How many Nodes are in the list)
 func (c *CircularLinkedList) Length() int {
 	return c.len
 }
 
+// Current returns the Node that is active in the list
 func (c *CircularLinkedList) Current() *Node {
 	if c.current != nil {
 		return c.current
@@ -62,6 +70,7 @@ func (c *CircularLinkedList) Current() *Node {
 	return c.head
 }
 
+// Next returns the following Node of the current one
 func (c *CircularLinkedList) Next() *Node {
 	if c.current != nil {
 		c.current = c.current.Next
@@ -71,6 +80,7 @@ func (c *CircularLinkedList) Next() *Node {
 	return nil
 }
 
+// Previous returns the Node before the current one
 func (c *CircularLinkedList) Previous() *Node {
 	if c.current != nil {
 		c.current = c.current.Previous
@@ -80,6 +90,7 @@ func (c *CircularLinkedList) Previous() *Node {
 	return nil
 }
 
+// AddBefore adds a new Node before the current one
 func (c *CircularLinkedList) AddBefore(n *Node) *Node {
 	switch {
 	case c.len == 0:
@@ -99,6 +110,7 @@ func (c *CircularLinkedList) AddBefore(n *Node) *Node {
 	return c.current
 }
 
+// AddAfter adds a new Node after the current one
 func (c *CircularLinkedList) AddAfter(n *Node) *Node {
 	switch {
 	case c.len == 0:
@@ -118,6 +130,7 @@ func (c *CircularLinkedList) AddAfter(n *Node) *Node {
 	return c.current
 }
 
+// Remove is disconnecting the current node from the list
 func (c *CircularLinkedList) Remove() *Node {
 	if c.len == 0 {
 		return nil
