@@ -81,9 +81,12 @@ func (c *CircularLinkedList) Previous() *Node {
 }
 
 func (c *CircularLinkedList) AddBefore(n *Node) *Node {
-	if c.len == 0 {
+	switch {
+	case c.len == 0:
 		c.addInit(n)
-	} else {
+	case c.current == c.head:
+		return c.Prepend(n)
+	default:
 		c.current.Previous.Next = n
 		c.current.Previous = n
 		n.Previous = c.current.Previous
@@ -97,9 +100,12 @@ func (c *CircularLinkedList) AddBefore(n *Node) *Node {
 }
 
 func (c *CircularLinkedList) AddAfter(n *Node) *Node {
-	if c.len == 0 {
+	switch {
+	case c.len == 0:
 		c.addInit(n)
-	} else {
+	case c.current == c.tail:
+		return c.Append(n)
+	default:
 		c.current.Next.Previous = n
 		c.current.Next = n
 		n.Previous = c.current
